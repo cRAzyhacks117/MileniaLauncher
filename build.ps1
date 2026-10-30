@@ -1,7 +1,11 @@
+param(
+	[string]$JdkBin = 'C:\L2_Server\tools\zulu21fx\zulu21.52.203-ca-fx-jdk21.0.12.1-win_x64\bin'
+)
+
 $ErrorActionPreference = 'Stop'
 
 $project = $PSScriptRoot
-$jdkBin = 'C:\L2_Server\tools\zulu21fx\zulu21.52.203-ca-fx-jdk21.0.12.1-win_x64\bin'
+$jdkBin = $JdkBin
 $source = Join-Path $project 'MileniaLauncher.java'
 if (-not (Test-Path -LiteralPath $source -PathType Leaf))
 {
@@ -59,5 +63,5 @@ if ($LASTEXITCODE -ne 0)
 	throw "Launcher packaging failed with exit code $LASTEXITCODE."
 }
 
-Compress-Archive -Path (Join-Path $image '*') -DestinationPath $launcherZip -CompressionLevel Optimal
+Compress-Archive -Path (Join-Path $image '*') -DestinationPath $launcherZip -CompressionLevel Optimal -Force
 Write-Output "Built launcher package: $launcherZip"
